@@ -1,0 +1,1215 @@
+# Конфигурация QQAssistant
+# Автор: AllF1RE
+
+# Основные настройки
+settings:
+  prefix: "&6QQAssist: "
+  debug: false
+  session-timeout: 60
+  # Интервал отправки сообщений из actionbar!
+  actionbar-refresh-ticks: 40
+  # Настройка фората времени для аргументов
+  time-formats:
+    second: ["с", "сек", "секунд", "секунда", "секунды"]
+    minute: ["м", "мин", "минут", "минута", "минуты"]
+    hour: ["ч", "час", "часов"]
+    day: ["д", "день", "дня", "дней"]
+    week: ["нед", "неделя", "недели", "недель"]
+    month: ["мес", "месяц", "месяца", "месяцев"]
+    year: ["г", "год", "года", "лет"]
+  # Настройки значений по умолчанию для заполнителей
+  placeholder-defaults:
+    target-name: "кто-то"          # если цель не указана
+    target-parse: "не нашлось"     # если parse_ вернул пустоту
+    target-data: "—"               # если target_* вернул null
+
+# Алиасы для команды
+aliases:
+  - "qqa"
+  - "qqassist"
+  - "assist"
+  - "assistant"
+  - "bot"
+  - "chatbot"
+
+# Сообщения
+messages:
+  no_permission: "%prefix% &7У вас недостаточно прав"
+  reload_success: "%prefix% &aКонфигурация перезагружена за %time%ms"
+  unknown_command: "%prefix% &cНеизвестная команда"
+  usage_reload: "%prefix% &cИспользование: /%alias% reload"
+  usage_info: "%prefix% &cИспользование: /%alias% info"
+  info_message:
+    - "&6&lQQAssistant"
+    - "&7Версия: &f1.0.0"
+    - "&7Автор: &fAllF1RE"
+    - "&7Помощь: &f/%alias% help"
+
+# Паттерны для упоминаний (placeholder: {player})
+mention-patterns:
+  - "@{player}"
+  - "#{player}"
+  - "[{player}]"
+  - "({player})"
+  - "*{player}*"
+  - "~{player}~"
+
+# Правила ответов бота
+rules:
+  # ===== ОРИГИНАЛЬНЫЕ ПРАВИЛА =====
+  greeting:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+    condition: ""
+    priority: 100
+    chance: 100
+    cooldown_ticks: 40
+    questions:
+      exact:
+        - "привет"
+        - "здравствуйте"
+        - "здарова"
+      regex:
+        - "(?i)прив(ет|iвет|эт)"
+        - "хай"
+        - "hello"
+        - "ку"
+      contains: []
+    answers:
+      - "sound! ENTITY_PLAYER_LEVELUP 1.0 1.5"
+    random_answers:
+      - "message! &#EA7AFF▏  &r&#996e6b &fПривет, %player_name%!"
+      - "message! &#EA7AFF▏  &r&#996e6b &fЗдарова, %player_name%!"
+      - "message! &#EA7AFF▏  &r&#996e6b &fПриветствую!"
+
+  farewell:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "local"
+    condition: ""
+    priority: 90
+    chance: 100
+    cooldown_ticks: 40
+    questions:
+      exact:
+        - "пока"
+        - "до свидания"
+      regex:
+        - "(?i)(bye|goodbye|бай)"
+      contains: []
+    answers:
+      - "sound! ENTITY_VILLAGER_NO 1.0 1.0"
+    random_answers:
+      - "message! &#EA7AFF▏  &r&#996e6b &fПока, %player_name%!"
+      - "message! &#EA7AFF▏  &r&#996e6b &fДо встречи!"
+
+  who_are_you:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "local"
+    condition: ""
+    priority: 60
+    chance: 100
+    cooldown_ticks: 60
+    questions:
+      exact:
+        - "ты кто"
+        - "кто ты"
+        - "ты бот?"
+        - "ты ии?"
+      regex: []
+      contains: []
+    answers: []
+    random_answers:
+      - "message! &#EA7AFF▏  &r&#996e6b &fЯ чат-бот этого сервера!"
+      - "message! &#EA7AFF▏  &r&#996e6b &fЯ бот-помощник!"
+
+  help:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "local"
+    condition: ""
+    priority: 50
+    chance: 100
+    cooldown_ticks: 100
+    questions:
+      exact:
+        - "помоги"
+        - "помощь"
+        - "хелп"
+      regex:
+        - "(?i)(help|помогите)"
+      contains: []
+    answers: []
+    random_answers:
+      - "message! &#EA7AFF▏  &r&#996e6bПомощь:"
+      - "message! &7  &e/menu &7- меню"
+      - "message! &7  &e/rules &7- правила"
+      - "message! &7  &e/shop &7- магазин"
+      - "message! &7  &e/qqassist &7- инфо о плагине"
+
+  # ===== ПРАВИЛА ИЗ СТАРОГО ПЛАГИНА =====
+  
+  # Правило 1: Как открыть меню
+  how_open_menu:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 99
+    chance: 100
+    cooldown_ticks: 60
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "как открыть меню"
+        - "как открыть мню"
+        - "как меню открыть"
+        - "где главное меню"
+        - "как попасть в главное меню"
+        - "как зайти в главное меню"
+        - "как попать в меню"
+        - "как открыть главное меню"
+        - "как главное меню открыть"
+        - "а как меню открыть"
+        - "подскажите как открыть меню"
+        - "подскажите как меню открыть"
+        - "а где меню"
+        - "а где меню то"
+        - "а где меню взять"
+        - "где вы меню нашли"
+        - "где ты меню нашел"
+        - "где ты меню нашла"
+        - "какая команда чтобы меню открыть"
+        - "какая команда что бы меню открыть"
+        - "какая команда что-бы меню открыть"
+        - "какая команда штобы меню открыть"
+        - "какая команда на открытие меню"
+        - "какая команда на меню"
+        - "какой командой меню открыть"
+        - "какая команда чтобы открыть меню"
+        - "какая команда что бы открыть меню"
+        - "какая команда что-бы открыть меню"
+        - "какая команда штобы открыть меню"
+        - "что за команда на меню"
+        - "какой командой открыть меню"
+        - "скажите команду на меню"
+        - "подскажите команду на меню"
+        - "напишите команду на меню"
+        - "скажите команду на открытие меню"
+        - "подскажите команду на открытие меню"
+        - "напишите команду на открытие меню"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, попробуйте комбинацию клавиш &6SHIFT&8 + &6F &#996e6bи выберите слот от 1 до 9."
+    random_answers: []
+
+  # Правило 2: Приваты
+  privates:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 98
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "тут есть приваты"
+        - "как создать приват"
+        - "как заприватить"
+        - "как тут заприватить"
+        - "тут приваты блоками"
+        - "здесь приваты блоками"
+        - "тут приваты топориком"
+        - "здесь приваты топориком"
+        - "тут приваты топором"
+        - "здесь приваты топором"
+        - "какие тут приваты"
+        - "какие здесь приваты"
+        - "как тут регионы"
+        - "как тут приваты"
+        - "как сделать рг"
+        - "как создать рг"
+        - "как делать рг"
+        - "можно сделать рг"
+        - "как приватить"
+        - "как тут приватить"
+        - "здесь есть приваты"
+        - "здесь есть регионы"
+        - "где взять блок привата"
+        - "где взять приват"
+        - "как тут правильно приватить"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, приват можно создать с помощью команды &6/r&#996e6b!"
+    random_answers: []
+
+  # Правило 3: Зачарования
+  enchantments:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 97
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "как получить зачарования"
+        - "откуда взять зачарования"
+        - "откуда взять чары"
+        - "откуда взять кастом зачарования"
+        - "откуда взять кастом чары"
+        - "откуда взять кастом чарки"
+        - "как получить чары"
+        - "где получить зачарования"
+        - "где мне получить чары"
+        - "где мне получить зачарования"
+        - "где мне взять чары"
+        - "где мне взять зачарования"
+        - "где получить чары"
+        - "где получить чарки"
+        - "где взять зачарования"
+        - "где взять чары"
+        - "как получить кастом зачарования"
+        - "как получить кастом чары"
+        - "где получить кастом зачарования"
+        - "где получить кастом чары"
+        - "где взять кастом зачарования"
+        - "где взять кастом чары"
+        - "где взять кастом чарки"
+        - "как получить новые зачарования"
+        - "тут есть кастом чары"
+        - "тут есть кастом зачарования"
+        - "тут есть свои зачарования"
+        - "здесь есть кастом чары"
+        - "здесь есть кастом зачарования"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, зачарования бот можно посмотреть командой &6/enchants&7!"
+    random_answers: []
+
+  # Правило 4: Приветствие всем
+  greet_all:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+    condition: ""
+    priority: 96
+    chance: 100
+    cooldown_ticks: 100
+    questions:
+      exact:
+        - "всем привет"
+        - "привет всем"
+        - "всем здарова"
+        - "здарова всем"
+        - "всем ку"
+        - "приветствую всех"
+        - "всеобщий салам"
+        - "qq all"
+        - "всем здорова"
+        - "здорова всем"
+        - "всех приветствую"
+        - "ку все"
+        - "ку всем"
+        - "всем здаров"
+        - "здравствуйте всем"
+      regex: []
+      contains: []
+    answers: []
+    random_answers:
+      - "message! &#EA7AFF▏  &r&#996e6bЗдравствуй, &e%player_name%&7!"
+      - "message! &#EA7AFF▏  &r&#996e6bПривет, &e%player_name%&7!"
+      - "message! &#EA7AFF▏  &r&#996e6bУра! Привет &e%player_name%&7!"
+      - "message! &#EA7AFF▏  &r&#996e6bПриветствую, &e%player_name%&7!"
+      - "gMessage! &#EA7AFF▏  &r&#996e6bЗдравствуй, &e%player_name%&7!"
+      - "gMessage! &#EA7AFF▏  &r&#996e6bПривет, &e%player_name%&7!"
+      - "gMessage! &#EA7AFF▏  &r&#996e6bУра! Привет &e%player_name%&7!"
+      - "gMessage! &#EA7AFF▏  &r&#996e6bПриветствую, &e%player_name%&7!"
+
+  # Правило 5: Боевой пропуск
+  battlepass:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 95
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "что за награды"
+        - "чо за награды"
+        - "шо за награды"
+        - "тут есть батлпасс"
+        - "какие награды"
+        - "какие ещё награды"
+        - "какие еще награды"
+        - "какие ещо награды"
+        - "как получить награды"
+        - "как забрать награды"
+        - "где получить награды"
+        - "тут есть боевой пропуск"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, Боевой Пропуск находится в главном меню!"
+      - "asConsole! bpadmin open portal %player_name%"
+    random_answers: []
+
+  # Правило 6: Админка (шутка)
+  admin_request:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 94
+    chance: 100
+    cooldown_ticks: 120
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "дай админку"
+        - "дацте адмику"
+        - "дайте админку"
+        - "дай одминку"
+        - "дайте одминку"
+        - "дай оп"
+        - "дайте оп"
+        - "как получить админку"
+        - "как получить оп"
+        - "дай опку"
+        - "дайте опку"
+        - "как купить админку"
+        - "где купить админку"
+        - "где взять админку"
+        - "дайте права"
+        - "дай права"
+        - "дайте модерку"
+        - "дай модерку"
+        - "дайте креатив"
+        - "дай креатив"
+        - "как стать модером"
+        - "как стать админом"
+        - "как получить креатив"
+        - "нужен ютубер"
+        - "как получить модерку"
+        - "как купить модерку"
+        - "можно купить модерку"
+        - "можно купить оп"
+        - "дай модераторку"
+        - "дайте модераторку"
+        - "дай гм"
+        - "дай флай"
+        - "дайте гм"
+        - "дайте флай"
+        - "дай креативку"
+        - "как купить креатив"
+        - "можно купить креатив"
+        - "купить креатив"
+        - "купить админку"
+        - "стану модером"
+        - "стану админом"
+        - "стану хелпером"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, все игроки нашего сервера играют на выживании, даже персонал!"
+    random_answers: []
+
+  # Правило 7: Данжи и пати
+  dungeons:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 93
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "как войти в пати"
+        - "как пойти в данж с друзьями"
+        - "а как войти в данж с кем то"
+        - "как пойти в данж вместе"
+        - "как пойти вместе в данж"
+        - "как пойти с кем то в данж"
+        - "как пойти в данжи вместе"
+        - "как пойти вместе в данжи"
+        - "как пойти с кем то в данжи"
+        - "а как пойти вместе в данж"
+        - "а как пойти с кем то в данж"
+        - "а как пойти в данжи вместе"
+        - "а как пойти вместе в данжи"
+        - "а как пойти с кем то в данжи"
+        - "как войти в данж с другом"
+        - "как пойти в данж с другом"
+        - "а как пойти в данж с другом"
+        - "а как пойти в данж с друзьями"
+        - "как создать пати в данже"
+        - "как создать пати в данжах"
+        - "как в данже создать пати"
+        - "как в данж пойти с другом"
+        - "как телепортироваться в данж с кем то"
+        - "как телепортироваться в данж с другом"
+        - "как телепортироваться в данж с друзьями"
+        - "как телепортироваться в данж с тимой"
+        - "как тим в данжах"
+        - "а как тим в данжах"
+        - "как тимится в данжах"
+        - "как тимится в данже"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, мы работаем над этим,"
+    random_answers: 
+      - "message! &#EA7AFF▏  &#996e6bскоро всё будет готово!"
+      - "message! &#EA7AFF▏  &#996e6bданжи почти готовы"
+      - "message! &#EA7AFF▏  &#996e6bнаработки уже есть)"
+
+  # Правило 9: Защита от мобов
+  mob_defense:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 92
+    chance: 100
+    cooldown_ticks: 200
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "мобы убивают"
+        - "мобы заебали"
+        - "мне пизда"
+        - "нам пизда"
+        - "мы умрём"
+        - "нас убьют"
+        - "меня обьют"
+        - "щас сдохну"
+        - "сейчас сдохну"
+        - "ща сдохну"
+        - "ща умру"
+        - "щас умру"
+        - "сейчас умру"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, защищайся!"
+      - "asConsole! cmi give %player_name% shield 1 -slot:40"
+    random_answers: []
+
+  # Правило 10: Рецепты
+  recipes:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 91
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "как посмотреть рецепты"
+        - "где посмотреть рецепты"
+        - "как открыть меню рецептов"
+        - "тут есть рецепты"
+        - "кастом крафты"
+        - "крафт кастомок"
+        - "как крафтить кастомки"
+        - "где взять книгу рецептов"
+        - "где можно построить рецепты"
+        - "где посмотреть все рецепты"
+        - "где можно посмотреть все рецепты"
+        - "как посмотреть все рецепты"
+        - "где взять рецепты"
+        - "как узнать рецепты"
+        - "как открыть рецепты"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, используйте выбор меню, комбинацией &6Shift&8 + &6ПКМ"
+    random_answers: []
+
+  # Правило 11: Мана
+  mana_info:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 90
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "что за мана"
+        - "для чего нужна мана"
+        - "для чего вообще нужна мана"
+        - "откуда у меня мана"
+        - "как получить ману"
+        - "откуда берется мана"
+        - "откуда берётся мана"
+        - "как получить больше маны"
+        - "куда потратить ману"
+        - "как расходовать ману"
+        - "я могу купить что то за ману"
+        - "я могу купить что-то за ману"
+        - "я могу купить что либо за ману"
+        - "что можно купить за ману"
+        - "на что можно потратить ману"
+        - "где потратить ману"
+        - "как потратить ману"
+        - "можно ли получить ману"
+        - "что такое мана"
+        - "чо за мана"
+        - "чё за мана"
+        - "че за мана"
+        - "какая ещё мана"
+        - "как заработать ману"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, мана накапливается с повышением вашего уровня и используется как заряд для вооружения или брони!"
+    random_answers: []
+
+  # Правило 12: Телеграм чат
+  telegram_chat:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 89
+    chance: 100
+    cooldown_ticks: 120
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "почему вы пишете в чат но вас нет на сервере"
+        - "почему вас не видно в игре"
+        - "почему вас не видно на сервере"
+        - "почему вас нет на сервере"
+        - "почему тебя не видно на сервере"
+        - "почему вас не видно в табе"
+        - "почему тебя не видно в табе"
+        - "откуда вы пишите"
+        - "почему я вас не вижу на сервере"
+        - "почему я вас не вижу в табе"
+        - "почему тебя не видно здесь"
+        - "что за люди пишут в чат"
+        - "чо за люди пишут в чат"
+        - "как ты пишешь в игре если тебя нет"
+        - "как ты тут пишешь если ты не в игре"
+        - "как ты тут пишешь если ты оффлайн"
+        - "как ты пишешь в игре если ты оффлайн"
+        - "как ты пишешь в игре если ты не в сети"
+        - "как ты пишешь в игре если ты не на сервере"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, глобальный чат привязан к телеграм чату!"
+    random_answers: []
+
+  # Правило 13: Монеты
+  coins_info:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 88
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "как заработать монеты"
+        - "где взять монеты"
+        - "монет нет"
+        - "нет монет"
+        - "монеток нету"
+        - "монет нету"
+        - "как получить монеты"
+        - "как тут заработать"
+        - "а где взять монеты"
+        - "как заработать деньги"
+        - "как заработать денег"
+        - "как заработать валюту"
+        - "где взять валюту"
+        - "я могу заработать монеты"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, монеты это основная игровая валюта, её можно заработать любыми способами!"
+    random_answers: []
+
+  # Правило 14: Плиты с мобов
+  mob_coins:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 87
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "что за плиты выпадают с мобов"
+        - "что это выпадает с мобов"
+        - "я получаю какие то плиты с мобов"
+        - "что это из мобов падает"
+        - "что это выпало с моба"
+        - "с мобов падают монеты"
+        - "что то выпадает с мобов"
+        - "что-то выпадает с мобов"
+        - "с мобов падают деньги"
+        - "мне мобов выпадают подсолнухи"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, с мобов падают монеты, чем выше ваш уровень, тем больше монет выпадает с мобов!"
+    random_answers: []
+
+  # Правило 15: Тотемы
+  totems:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 86
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "как получить тотем"
+        - "где взять тотем"
+        - "почему тотем не выпал"
+        - "почему томет не выпадает"
+        - "почему тотемы не падают"
+        - "почему тотем не падает"
+        - "с какого моба выбить тотем"
+        - "с какого моба можно выбить тотем"
+        - "с какого моба получить тотем"
+        - "с какого моба можно получить тотем"
+        - "где взять тотемы"
+        - "откуда взять тотем"
+        - "как получить тотемы"
+        - "где взять тометы"
+        - "почему тотемы не выпадают"
+        - "почему тотемы не падают"
+        - "с какого моба выбить тотемы"
+        - "с каких мобов выбить тотемы"
+        - "с каких мобов выбить тотем"
+        - "с каких мобов можно выбить тотемы"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, тотемы выпадают с заклинателей!"
+    random_answers: []
+
+  # Правило 16: Сезоны/температура
+  seasons:
+    delay_ticks: 60
+    permission: ""
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 85
+    chance: 100
+    cooldown_ticks: 80
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "почему везде цветы"
+        - "везде цветы"
+        - "как избавится от цветов"
+        - "чо за цветы"
+        - "поч везде цветы"
+        - "поч я мерзну"
+        - "поч я мёрзну"
+        - "поч мне жарко"
+        - "поч мне жарка"
+        - "поч мне холадна"
+        - "почему мне холадна"
+        - "пачему мне холадна"
+        - "пачему мне жарка"
+        - "что за цветы"
+        - "почему я замерзаю"
+        - "почему мне холодно"
+        - "почему мне жарко"
+        - "что за температура"
+        - "чо за температура"
+        - "у меня высокая температура"
+        - "у меня большая температура"
+        - "у меня низкая температура"
+        - "у меня маленькая температура"
+    answers:
+      - "message! &#EA7AFF▏  &r&e%player_name%&#996e6b, обратите внимание на сезон времени года, в ТАБ"
+    random_answers: []
+
+  # Правило 17: Перезапуск сервера (требуется право)
+  restart_server:
+    delay_ticks: 60
+    permission: "бот.bot.restart"
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 100
+    chance: 100
+    cooldown_ticks: 100
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "бот перезапуск сервера"
+        - "бот, перезапуск сервера"
+        - "бот перезапускай сервер"
+        - "бот, перезапускай сервер"
+        - "бот перезагрузи сервер"
+        - "бот, перезагрузи сервер"
+        - "бот перезагружай сервер"
+        - "бот, перезагружай сервер"
+        - "бот, рестарт сервера"
+    answers:
+      - "message! &#EA7AFF▏  &#996e6bПерезапускаю."
+      - "asConsole! restart"
+    random_answers: []
+
+  # Правило 18: Выдача креатива (требуется право)
+  give_creative:
+    delay_ticks: 60
+    permission: "бот.bot.creative"
+    allowed-chats:
+      - "global"
+      - "local"
+    condition: ""
+    priority: 100
+    chance: 100
+    cooldown_ticks: 100
+    questions:
+      exact: []
+      regex: []
+      contains:
+        - "бот дай креатив"
+        - "бот, дай креатив"
+        - "бот, выдай креатив"
+        - "бот выдай креатив"
+        - "бот мне нужен креатив"
+        - "бот, мне нужен креатив"
+        - "бот, дай гм 1"
+        - "бот дай гм1"
+        - "бот, гм1"
+        - "бот гм1"
+        - "бот, творческий режим"
+        - "бот, дай творческий"
+        - "бот, дай творческий режим"
+        - "бот, выдай творческий режим"
+        - "бот творческий режим"
+        - "бот дай творческий"
+        - "бот дай творческий режим"
+        - "бот выдай творческий режим"
+    answers:
+      - "message! &#EA7AFF▏  &r&#996e6bВыдаю творческий режим для &e%player_name%&#996e6b."
+      - "asConsole! cmi gamemode creative %player_name% -s"
+    random_answers: []
+
+  balance_check:
+    delay_ticks: 60
+    permission: "qqassist.admin"
+    allowed-chats:
+      - "local"
+    condition: ""
+    priority: 90
+    chance: 100
+    cooldown_ticks: 60
+    questions:
+      contains:
+        - "какой баланс"
+        - "сколько денег"
+        - "сколько монет"
+        - "баланс игрока"
+        - "проверить баланс"
+    answers:
+      - "actionbar! &eБаланс %qqassist_target%: &6%qqassist_parse_vault_eco_balance% ⛃"
+    #  - "asConsole! cmi broadcast &eБаланс %qqassist_target%: &6%qqassist_parse_vault_eco_balance% ⛃"
+    random_answers: []
+    #  - "message! &#EA7AFF▏  &r&#996e6bУ игрока &e%qqassist_target% &#996e6bсейчас &f%qqassist_parse_vault_eco_balance% монет ⛃"
+
+# Пример правила с аргументами
+  ban_player:
+    delay_ticks: 0
+    permission: "qqassist.admin"
+    allowed-chats: []
+    condition: ""
+    priority: 100
+    chance: 100
+    cooldown_ticks: 60
+    questions:
+      contains:
+        - "бот забань"
+        - "бот, забань"
+        - "бот, бань игрока"
+        - "бот, забань игрока"
+    session:
+      enabled: true
+      timeout: 600
+      idle-timeout: 300
+      idle-message: "message! %prefix% &rЖду ответ через &e%qqassist_session_idle_left%"
+      cancel-message: "message! %prefix% &rВы слишком долго отвечали."
+      cancel-triggers:
+        - "отмена"
+        - "стоп"
+        - "cancel"
+        - "отменить"
+      skip-triggers:
+        - "пропустить"
+        - "дальше"
+        - "skip"
+      listen-chat: "same"
+      steps:
+        - id: "время"
+          prompt: "message! %prefix% &rШаг 1/2: Введите время бана для &e%qqassist_session_target% &r(в часах, 1-5):"
+          validate: "[1-5]"
+          error: "message! %prefix% &rНеверно. Введите число от 1 до 5"
+          default: "1"
+        - id: "причина"
+          prompt: "message! %prefix% &rШаг 2/2: Введите причину бана для &e%qqassist_session_target%&r:"
+          validate: ".+"
+          error: "message! %prefix% &rВам нужно указать причину!"
+          default: "нарушение правил"
+    answers:
+      - "message! %prefix% &rБаню игрока &e%qqassist_session_target% &rна &e%qqassist_session_arg_время%ч &rза &e%qqassist_session_arg_причина%"
+      - "asConsole! ban %qqassist_session_target% %qqassist_session_arg_время%ч %qqassist_session_arg_причина%"
+
+# Пример с аргументами (бот, выдай @Ник )
+  item_give:
+    delay_ticks: 40
+    permission: "qqassist.admin"
+    allowed-chats: []
+    condition: ""
+    priority: 100
+    chance: 100
+    cooldown_ticks: 60
+    questions:
+      contains:
+        - "бот, дай предмет"
+        - "бот, выдай"
+        - "бот, дай"
+        - "бот выдай"
+        - "бот, мне нужны"
+        - "бот, мне нужно"
+        - "бот, мне нужна"
+    args-def:
+      - id: "предмет"
+        values: ["меч", "sword", "топор", "axe", "кирку", "pickaxe", "лук", "bow", "лопату", "shovel", "щит", "shield", "шлем", "каска", "каску", "helmet", "нагрудник", "броня", "броню", "куртку", "куртка", "chestplate", "поножи", "штаны", "leggings", "ботинки", "обувь", "boots"]
+        default: "меч"
+      - id: "материал"
+        values: ["деревянный", "деревянная", "деревянную", "деревянное", "деревянные", "деревянного", "wooden", "каменный", "каменная", "каменную", "каменное", "каменные", "каменного", "stone", "железный", "железная", "железную", "железное", "железные", "железного", "iron", "золотой", "золотая", "золотую", "золотое", "золотые", "золотого", "golden", "алмазный", "алмазная", "алмазную", "алмазное", "алмазные", "алмазного", "diamond", "незеритовый", "незеритовая", "незеритовую", "незеритовое", "незеритовые", "незер", "незерит", "незеритового", "netherite", "кожаный", "кожаные", "кожаная", "кожаную", "кожаное", "кожаные", "кожаного", "leather"]
+        default: "железный"
+      - id: "количество"
+        values: ["1", "2", "3", "4", "5", "10", "32", "64"]
+        default: "1"
+      - id: "получатель"
+        values: ["мне", "себе", "игроку"]
+        default: "мне"
+    answers:
+      # ==========================================
+      # МЕЧИ
+      # ==========================================
+      - "arg:1:[меч||sword]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! actionbar:40! &r &eдеревянный меч &rдля &e%player_name%"
+      - "arg:1:[меч||sword]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! asConsole! give %player_name% wooden_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! actionbar:40! &r &eдеревянный меч &rдля &e%qqassist_target%"
+      - "arg:1:[меч||sword]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! asConsole! give %qqassist_target% wooden_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! actionbar:40! &r &7каменный меч &rдля &e%player_name%"
+      - "arg:1:[меч||sword]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! asConsole! give %player_name% stone_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! actionbar:40! &r &7каменный меч &rдля &e%qqassist_target%"
+      - "arg:1:[меч||sword]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! asConsole! give %qqassist_target% stone_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезный меч &rдля &e%player_name%"
+      - "arg:1:[меч||sword]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезный меч &rдля &e%qqassist_target%"
+      - "arg:1:[меч||sword]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотой меч &rдля &e%player_name%"
+      - "arg:1:[меч||sword]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! actionbar:40! &r &6золотой меч &rдля &e%qqassist_target%"
+      - "arg:1:[меч||sword]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазный меч &rдля &e%player_name%"
+      - "arg:1:[меч||sword]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазный меч &rдля &e%qqassist_target%"
+      - "arg:1:[меч||sword]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовый меч &rдля &e%player_name%"
+      - "arg:1:[меч||sword]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_sword %qqassist_arg_3%"
+      - "arg:1:[меч||sword]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовый меч &rдля &e%qqassist_target%"
+      - "arg:1:[меч||sword]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_sword %qqassist_arg_3%"
+      # ==========================================
+      # ТОПОРЫ
+      # ==========================================
+      - "arg:1:[топор||axe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! actionbar:40! &r &eдеревянный топор &rдля &e%player_name%"
+      - "arg:1:[топор||axe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! asConsole! give %player_name% wooden_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! actionbar:40! &r &eдеревянный топор &rдля &e%qqassist_target%"
+      - "arg:1:[топор||axe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! asConsole! give %qqassist_target% wooden_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! actionbar:40! &r &7каменный топор &rдля &e%player_name%"
+      - "arg:1:[топор||axe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! asConsole! give %player_name% stone_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! actionbar:40! &r &7каменный топор &rдля &e%qqassist_target%"
+      - "arg:1:[топор||axe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! asConsole! give %qqassist_target% stone_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезный топор &rдля &e%player_name%"
+      - "arg:1:[топор||axe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезный топор &rдля &e%qqassist_target%"
+      - "arg:1:[топор||axe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотой топор &rдля &e%player_name%"
+      - "arg:1:[топор||axe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! actionbar:40! &r &6золотой топор &rдля &e%qqassist_target%"
+      - "arg:1:[топор||axe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазный топор &rдля &e%player_name%"
+      - "arg:1:[топор||axe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазный топор &rдля &e%qqassist_target%"
+      - "arg:1:[топор||axe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовый топор &rдля &e%player_name%"
+      - "arg:1:[топор||axe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_axe %qqassist_arg_3%"
+      - "arg:1:[топор||axe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовый топор &rдля &e%qqassist_target%"
+      - "arg:1:[топор||axe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_axe %qqassist_arg_3%"
+      # ==========================================
+      # КИРКИ
+      # ==========================================
+      - "arg:1:[кирку||pickaxe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! actionbar:40! &r &eдеревянная кирка &rдля &e%player_name%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! asConsole! give %player_name% wooden_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! actionbar:40! &r &eдеревянная кирка &rдля &e%qqassist_target%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! asConsole! give %qqassist_target% wooden_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! actionbar:40! &r &7каменная кирка &rдля &e%player_name%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! asConsole! give %player_name% stone_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! actionbar:40! &r &7каменная кирка &rдля &e%qqassist_target%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! asConsole! give %qqassist_target% stone_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезная кирка &rдля &e%player_name%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезная кирка &rдля &e%qqassist_target%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотая кирка &rдля &e%player_name%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! actionbar:40! &r &6золотая кирка &rдля &e%qqassist_target%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазная кирка &rдля &e%player_name%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазная кирка &rдля &e%qqassist_target%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовая кирка &rдля &e%player_name%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_pickaxe %qqassist_arg_3%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовая кирка &rдля &e%qqassist_target%"
+      - "arg:1:[кирку||pickaxe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_pickaxe %qqassist_arg_3%"
+      # ==========================================
+      # ЛОПАТЫ
+      # ==========================================
+      - "arg:1:[лопату||shovel]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! actionbar:40! &r &eдеревянная лопата &rдля &e%player_name%"
+      - "arg:1:[лопату||shovel]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! asConsole! give %player_name% wooden_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! actionbar:40! &r &eдеревянная лопата &rдля &e%qqassist_target%"
+      - "arg:1:[лопату||shovel]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! asConsole! give %qqassist_target% wooden_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! actionbar:40! &r &7каменная лопата &rдля &e%player_name%"
+      - "arg:1:[лопату||shovel]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! asConsole! give %player_name% stone_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! actionbar:40! &r &7каменная лопата &rдля &e%qqassist_target%"
+      - "arg:1:[лопату||shovel]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! asConsole! give %qqassist_target% stone_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезная лопата &rдля &e%player_name%"
+      - "arg:1:[лопату||shovel]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезная лопата &rдля &e%qqassist_target%"
+      - "arg:1:[лопату||shovel]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотая лопата &rдля &e%player_name%"
+      - "arg:1:[лопату||shovel]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! actionbar:40! &r &6золотая лопата &rдля &e%qqassist_target%"
+      - "arg:1:[лопату||shovel]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазная лопата &rдля &e%player_name%"
+      - "arg:1:[лопату||shovel]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазная лопата &rдля &e%qqassist_target%"
+      - "arg:1:[лопату||shovel]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовая лопата &rдля &e%player_name%"
+      - "arg:1:[лопату||shovel]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_shovel %qqassist_arg_3%"
+      - "arg:1:[лопату||shovel]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовая лопата &rдля &e%qqassist_target%"
+      - "arg:1:[лопату||shovel]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_shovel %qqassist_arg_3%"
+      # ==========================================
+      # МОТЫГИ
+      # ==========================================
+      - "arg:1:[мотыгу||hoe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! actionbar:40! &r &eдеревянная мотыга &rдля &e%player_name%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[мне||себе]! asConsole! give %player_name% wooden_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! actionbar:40! &r &eдеревянная мотыга &rдля &e%qqassist_target%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[деревянный||деревянную||деревянная||wooden]! arg:4:[игроку]! asConsole! give %qqassist_target% wooden_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! actionbar:40! &r &7каменная мотыга &rдля &e%player_name%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[мне||себе]! asConsole! give %player_name% stone_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! actionbar:40! &r &7каменная мотыга &rдля &e%qqassist_target%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[каменный||каменная||каменную||stone]! arg:4:[игроку]! asConsole! give %qqassist_target% stone_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезная мотыга &rдля &e%player_name%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезная мотыга &rдля &e%qqassist_target%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[железный||железные||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотая мотыга &rдля &e%player_name%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! actionbar:40! &r &6золотая мотыга &rдля &e%qqassist_target%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[золотой||золотые||золотую||золотая||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазная мотыга &rдля &e%player_name%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазная мотыга &rдля &e%qqassist_target%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[алмазный||алмазные||алмазное||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовая мотыга &rдля &e%player_name%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_hoe %qqassist_arg_3%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовая мотыга &rдля &e%qqassist_target%"
+      - "arg:1:[мотыгу||hoe]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_hoe %qqassist_arg_3%"
+      # ==========================================
+      # ЛУК (без материала)
+      # ==========================================
+      - "arg:1:[лук||bow]! arg:4:[мне||себе]! actionbar:40! &r &eлук &rдля &e%player_name%"
+      - "arg:1:[лук||bow]! arg:4:[мне||себе]! asConsole! give %player_name% bow %qqassist_arg_3%"
+      - "arg:1:[лук||bow]! arg:4:[игроку]! actionbar:40! &r &eлук &rдля &e%qqassist_target%"
+      - "arg:1:[лук||bow]! arg:4:[игроку]! asConsole! give %qqassist_target% bow %qqassist_arg_3%"
+      # ==========================================
+      # АРБАЛЕТ
+      # ==========================================
+      - "arg:1:[арбалет||crossbow]! arg:4:[мне||себе]! actionbar:40! &r &eарбалет &rдля &e%player_name%"
+      - "arg:1:[арбалет||crossbow]! arg:4:[мне||себе]! asConsole! give %player_name% crossbow %qqassist_arg_3%"
+      - "arg:1:[арбалет||crossbow]! arg:4:[игроку]! actionbar:40! &r &eарбалет &rдля &e%qqassist_target%"
+      - "arg:1:[арбалет||crossbow]! arg:4:[игроку]! asConsole! give %qqassist_target% crossbow %qqassist_arg_3%"
+      # ==========================================
+      # ТРЕЗУБЕЦ
+      # ==========================================
+      - "arg:1:[трезубец||trident]! arg:4:[мне||себе]! actionbar:40! &r &bтрезубец &rдля &e%player_name%"
+      - "arg:1:[трезубец||trident]! arg:4:[мне||себе]! asConsole! give %player_name% trident %qqassist_arg_3%"
+      - "arg:1:[трезубец||trident]! arg:4:[игроку]! actionbar:40! &r &bтрезубец &rдля &e%qqassist_target%"
+      - "arg:1:[трезубец||trident]! arg:4:[игроку]! asConsole! give %qqassist_target% trident %qqassist_arg_3%"
+      # ==========================================
+      # ЩИТ
+      # ==========================================
+      - "arg:1:[щит||shield]! arg:4:[мне||себе]! actionbar:40! &r &eщит &rдля &e%player_name%"
+      - "arg:1:[щит||shield]! arg:4:[мне||себе]! asConsole! give %player_name% shield %qqassist_arg_3%"
+      - "arg:1:[щит||shield]! arg:4:[игроку]! actionbar:40! &r &eщит &rдля &e%qqassist_target%"
+      - "arg:1:[щит||shield]! arg:4:[игроку]! asConsole! give %qqassist_target% shield %qqassist_arg_3%"
+      # ==========================================
+      # УДОЧКА
+      # ==========================================
+      - "arg:1:[удочку||fishing_rod||удочка]! arg:4:[мне||себе]! actionbar:40! &r &eудочка &rдля &e%player_name%"
+      - "arg:1:[удочку||fishing_rod||удочка]! arg:4:[мне||себе]! asConsole! give %player_name% fishing_rod %qqassist_arg_3%"
+      - "arg:1:[удочку||fishing_rod||удочка]! arg:4:[игроку]! actionbar:40! &r &eудочка &rдля &e%qqassist_target%"
+      - "arg:1:[удочку||fishing_rod||удочка]! arg:4:[игроку]! asConsole! give %qqassist_target% fishing_rod %qqassist_arg_3%"
+      # ==========================================
+      # ШЛЕМЫ (БРОНЯ)
+      # ==========================================
+      - "arg:1:[шлем||каску||helmet]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! actionbar:40! &r &eкожаный шлем &rдля &e%player_name%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! asConsole! give %player_name% leather_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! actionbar:40! &r &eкожаный шлем &rдля &e%qqassist_target%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! asConsole! give %qqassist_target% leather_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезный шлем &rдля &e%player_name%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезный шлем &rдля &e%qqassist_target%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотой шлем &rдля &e%player_name%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! actionbar:40! &r &6золотой шлем &rдля &e%qqassist_target%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазный шлем &rдля &e%player_name%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазный шлем &rдля &e%qqassist_target%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовый шлем &rдля &e%player_name%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_helmet %qqassist_arg_3%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовый шлем &rдля &e%qqassist_target%"
+      - "arg:1:[шлем||каску||helmet]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_helmet %qqassist_arg_3%"
+      # ==========================================
+      # НАГРУДНИКИ
+      # ==========================================
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! actionbar:40! &r &eкожаный нагрудник &rдля &e%player_name%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! asConsole! give %player_name% leather_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! actionbar:40! &r &eкожаный нагрудник &rдля &e%qqassist_target%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! asConsole! give %qqassist_target% leather_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезный нагрудник &rдля &e%player_name%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезный нагрудник &rдля &e%qqassist_target%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотой нагрудник &rдля &e%player_name%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! actionbar:40! &r &6золотой нагрудник &rдля &e%qqassist_target%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазный нагрудник &rдля &e%player_name%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазный нагрудник &rдля &e%qqassist_target%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовый нагрудник &rдля &e%player_name%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_chestplate %qqassist_arg_3%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовый нагрудник &rдля &e%qqassist_target%"
+      - "arg:1:[нагрудник||куртку||куртка||броню||броня||chestplate]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_chestplate %qqassist_arg_3%"
+      # ==========================================
+      # ПОНОЖИ
+      # ==========================================
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! actionbar:40! &r &eкожаные поножи &rдля &e%player_name%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! asConsole! give %player_name% leather_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! actionbar:40! &r &eкожаные поножи &rдля &e%qqassist_target%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! asConsole! give %qqassist_target% leather_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезные поножи &rдля &e%player_name%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезные поножи &rдля &e%qqassist_target%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотые поножи &rдля &e%player_name%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! actionbar:40! &r &6золотые поножи &rдля &e%qqassist_target%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазные поножи &rдля &e%player_name%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазные поножи &rдля &e%qqassist_target%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовые поножи &rдля &e%player_name%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_leggings %qqassist_arg_3%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовые поножи &rдля &e%qqassist_target%"
+      - "arg:1:[поножи||штаны||leggings]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_leggings %qqassist_arg_3%"
+      # ==========================================
+      # БОТИНКИ
+      # ==========================================
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! actionbar:40! &r &eкожаные ботинки &rдля &e%player_name%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[мне||себе]! asConsole! give %player_name% leather_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! actionbar:40! &r &eкожаные ботинки &rдля &e%qqassist_target%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[кожаный||кожаные||кожаная||кожаную||кожаный||кожаные||кожанные||кожаную||кожанную||leather]! arg:4:[игроку]! asConsole! give %qqassist_target% leather_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! actionbar:40! &r &fжелезные ботинки &rдля &e%player_name%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[мне||себе]! asConsole! give %player_name% iron_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! actionbar:40! &r &fжелезные ботинки &rдля &e%qqassist_target%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[железный||железные||железная||железное||железную||iron]! arg:4:[игроку]! asConsole! give %qqassist_target% iron_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! actionbar:40! &r &6золотые ботинки &rдля &e%player_name%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[мне||себе]! asConsole! give %player_name% golden_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! actionbar:40! &r &6золотые ботинки &rдля &e%qqassist_target%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[золотой||золотые||золотая||золотые||золотую||golden]! arg:4:[игроку]! asConsole! give %qqassist_target% golden_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! actionbar:40! &r &bалмазные ботинки &rдля &e%player_name%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[мне||себе]! asConsole! give %player_name% diamond_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! actionbar:40! &r &bалмазные ботинки &rдля &e%qqassist_target%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[алмазный||алмазные||алмазное||алмазная||алмазную||diamond]! arg:4:[игроку]! asConsole! give %qqassist_target% diamond_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! actionbar:40! &r &8незеритовые ботинки &rдля &e%player_name%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[мне||себе]! asConsole! give %player_name% netherite_boots %qqassist_arg_3%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! actionbar:40! &r &8незеритовые ботинки &rдля &e%qqassist_target%"
+      - "arg:1:[ботинки||обувь||boots]! arg:2:[незеритовый||незеритовые||незеритовую||незеритовая||незер||незерит||netherite]! arg:4:[игроку]! asConsole! give %qqassist_target% netherite_boots %qqassist_arg_3%"
+      # ==========================================
+      # FALLBACK лучше не включать
+      # ==========================================
+      #- "arg:1:[*]! message! &#EA7AFF▏   &rНеизвестный предмет: &e%qqassist_arg_1%&r. Доступно: меч, топор, кирка, лопата, мотыга, лук, арбалет, трезубец, щит, удочка, шлем, нагрудник, поножи, ботинки"
+    random_answers: []

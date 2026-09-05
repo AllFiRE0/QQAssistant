@@ -1,0 +1,19 @@
+name: QQAssistant
+version: '1.0.0'
+main: com.allfire.qqassist.QQAssistPlugin
+api-version: '1.21'
+author: AllF1RE
+description: Чат-бот ассистент для сервера
+depend: [PlaceholderAPI]
+softdepend: [Chatty, Vault]
+permissions:
+  qqassist.admin:
+    description: Доступ к админ-командам плагина
+    default: op
+
+commands:
+  qqassistant:
+    description: Основная команда QQAssistant
+    usage: /qqassistant <reload|info>
+    aliases: [qqa, qqassist, assist, assistant, bot, chatbot]
+    permission: qqassist.admin
